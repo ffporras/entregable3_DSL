@@ -1,0 +1,148 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AGRUPANDO_POR
+    CLAVE_PRIMA
+    CLAVE_REFERENTE
+    COMO_MUCHO
+    CONTANDO
+    COUNT
+    CREA_LA_TABLA
+    DE_LA_TABLA
+    DIVISION
+    EN
+    ENTRE
+    EN_ESTO
+    ES_NULO
+    EXISTE
+    MEZCLANDO
+    MULTIPLICACION
+    O
+    ORDENA_POR
+    PARECIDO_A
+    POR_DEFECTO
+    PUNTO
+    RESTA
+    SUMA
+    TIRA_LA_TABLA
+    TRANSFORMA_A
+    UNICO
+    WHERE_DEL_GROUP_BY
+    Y
+
+Grammar
+
+Rule 0     S' -> statement
+Rule 1     statement -> select_statement
+Rule 2     statement -> insert_statement
+Rule 3     statement -> update_statement
+Rule 4     statement -> delete_statement
+Rule 5     statement -> alter_statement
+Rule 6     select_statement -> TRAEME columns DE LA TABLA NOMBRE condition_opt
+Rule 7     condition_opt -> condition
+Rule 8     condition_opt -> empty
+Rule 9     empty -> <empty>
+Rule 10    columns -> TODO
+Rule 11    columns -> columns_list
+Rule 12    columns -> LOS_DISTINTOS NOMBRE
+Rule 13    condition -> DONDE NOMBRE comparison value PUNTO_COMA
+Rule 14    value -> NUMERO
+Rule 15    value -> STRING
+Rule 16    comparison -> MAYOR_QUE
+Rule 17    comparison -> MENOR_QUE
+Rule 18    comparison -> IGUAL
+Rule 19    comparison -> MAYOR_IGUAL
+Rule 20    comparison -> MENOR_IGUAL
+Rule 21    insert_statement -> METE_EN NOMBRE PARENIZQ columns_list PARENDER LOS_VALORES PARENIZQ values_list PARENDER PUNTO_COMA
+Rule 22    columns_list -> NOMBRE
+Rule 23    columns_list -> columns_list COMA NOMBRE
+Rule 24    values_list -> value
+Rule 25    values_list -> values_list COMA value
+Rule 26    update_statement -> ACTUALIZA NOMBRE SETEA assignments DONDE condition PUNTO_COMA
+Rule 27    assignments -> NOMBRE IGUAL value
+Rule 28    delete_statement -> BORRA_DE_LA NOMBRE DONDE condition PUNTO_COMA
+Rule 29    alter_statement -> CAMBIA_LA_TABLA NOMBRE alter_actions PUNTO_COMA
+Rule 30    alter_actions -> AGREGA_LA_COLUMNA NOMBRE VARCHAR PARENIZQ NUMERO PARENDER NO_NULO
+Rule 31    alter_actions -> ELIMINA_LA_COLUMNA NOMBRE
+
+Terminals, with rules where they appear
+
+ACTUALIZA            : 26
+AGREGA_LA_COLUMNA    : 30
+AGRUPANDO_POR        : 
+BORRA_DE_LA          : 28
+CAMBIA_LA_TABLA      : 29
+CLAVE_PRIMA          : 
+CLAVE_REFERENTE      : 
+COMA                 : 23 25
+COMO_MUCHO           : 
+CONTANDO             : 
+COUNT                : 
+CREA_LA_TABLA        : 
+DE_LA_TABLA          : 
+DIVISION             : 
+DONDE                : 13 26 28
+ELIMINA_LA_COLUMNA   : 31
+EN                   : 
+ENTRE                : 
+EN_ESTO              : 
+ES_NULO              : 
+EXISTE               : 
+IGUAL                : 18 27
+LOS_DISTINTOS        : 12
+LOS_VALORES          : 21
+MAYOR_IGUAL          : 19
+MAYOR_QUE            : 16
+MENOR_IGUAL          : 20
+MENOR_QUE            : 17
+METE_EN              : 21
+MEZCLANDO            : 
+MULTIPLICACION       : 
+NOMBRE               : 6 12 13 21 22 23 26 27 28 29 30 31
+NO_NULO              : 30
+NUMERO               : 14 30
+O                    : 
+ORDENA_POR           : 
+PARECIDO_A           : 
+PARENDER             : 21 21 30
+PARENIZQ             : 21 21 30
+POR_DEFECTO          : 
+PUNTO                : 
+PUNTO_COMA           : 13 21 26 28 29
+RESTA                : 
+SETEA                : 26
+STRING               : 15
+SUMA                 : 
+TIRA_LA_TABLA        : 
+TODO                 : 10
+TRAEME               : 6
+TRANSFORMA_A         : 
+UNICO                : 
+VARCHAR              : 30
+WHERE_DEL_GROUP_BY   : 
+Y                    : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+DE                   : 6
+LA                   : 6
+TABLA                : 6
+alter_actions        : 29
+alter_statement      : 5
+assignments          : 26
+columns              : 6
+columns_list         : 11 21 23
+comparison           : 13
+condition            : 7 26 28
+condition_opt        : 6
+delete_statement     : 4
+empty                : 8
+insert_statement     : 2
+select_statement     : 1
+statement            : 0
+update_statement     : 3
+value                : 13 24 25 27
+values_list          : 21 25
+
