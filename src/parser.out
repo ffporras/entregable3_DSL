@@ -3,13 +3,13 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     AGRUPANDO_POR
+    CAMBIA_LA_TABLA
     CLAVE_PRIMA
     CLAVE_REFERENTE
     COMO_MUCHO
     CONTANDO
     COUNT
     CREA_LA_TABLA
-    DE_LA_TABLA
     DIVISION
     EN
     ENTRE
@@ -39,7 +39,7 @@ Rule 2     statement -> insert_statement
 Rule 3     statement -> update_statement
 Rule 4     statement -> delete_statement
 Rule 5     statement -> alter_statement
-Rule 6     select_statement -> TRAEME columns DE LA TABLA NOMBRE condition_opt
+Rule 6     select_statement -> TRAEME columns DE_LA_TABLA NOMBRE condition_opt
 Rule 7     condition_opt -> condition
 Rule 8     condition_opt -> empty
 Rule 9     empty -> <empty>
@@ -62,7 +62,7 @@ Rule 25    values_list -> values_list COMA value
 Rule 26    update_statement -> ACTUALIZA NOMBRE SETEA assignments DONDE condition PUNTO_COMA
 Rule 27    assignments -> NOMBRE IGUAL value
 Rule 28    delete_statement -> BORRA_DE_LA NOMBRE DONDE condition PUNTO_COMA
-Rule 29    alter_statement -> CAMBIA_LA_TABLA NOMBRE alter_actions PUNTO_COMA
+Rule 29    alter_statement -> CAMBIA LA TABLA NOMBRE alter_actions PUNTO_COMA
 Rule 30    alter_actions -> AGREGA_LA_COLUMNA NOMBRE VARCHAR PARENIZQ NUMERO PARENDER NO_NULO
 Rule 31    alter_actions -> ELIMINA_LA_COLUMNA NOMBRE
 
@@ -72,7 +72,7 @@ ACTUALIZA            : 26
 AGREGA_LA_COLUMNA    : 30
 AGRUPANDO_POR        : 
 BORRA_DE_LA          : 28
-CAMBIA_LA_TABLA      : 29
+CAMBIA_LA_TABLA      : 
 CLAVE_PRIMA          : 
 CLAVE_REFERENTE      : 
 COMA                 : 23 25
@@ -80,7 +80,7 @@ COMO_MUCHO           :
 CONTANDO             : 
 COUNT                : 
 CREA_LA_TABLA        : 
-DE_LA_TABLA          : 
+DE_LA_TABLA          : 6
 DIVISION             : 
 DONDE                : 13 26 28
 ELIMINA_LA_COLUMNA   : 31
@@ -126,9 +126,9 @@ error                :
 
 Nonterminals, with rules where they appear
 
-DE                   : 6
-LA                   : 6
-TABLA                : 6
+CAMBIA               : 29
+LA                   : 29
+TABLA                : 29
 alter_actions        : 29
 alter_statement      : 5
 assignments          : 26

@@ -60,7 +60,15 @@ t_O = r'O'
 t_COUNT = r'COUNT'
 t_VARCHAR = r'VARCHAR'
 
-t_NOMBRE = r'[a-zA-Z_][a-zA-Z0-9_]*'
+#t_NOMBRE = r'[a-zA-Z_][a-zA-Z0-9_]*'
+def t_NOMBRE(t):
+    r'[a-zA-Z_][a-zA-Z0-9_]*'
+    if t.value.upper() in palabras_clave:
+        print(f"Token encontrado: {t.value} como {t.value.upper()}")  # Imprimir el token encontrado
+        t.type = t.value.upper()  # Cambia el tipo de token si es una palabra clave
+    else:
+        print(f"Token encontrado: {t.value} como NOMBRE")  # Imprimir el token encontrado
+    return t
 t_STRING = r'\'[^\']*\''
 t_NUMERO = r'\d+'
 
@@ -77,7 +85,7 @@ t_MENOR_IGUAL = r'<='
 t_PARENIZQ = r'\('
 t_PARENDER = r'\)'
 t_PUNTO_COMA = r';'
-t_PUNTO = r'.'
+t_PUNTO = r'\.'
 t_COMA = r','
 
 t_ignore = " \t"
@@ -220,6 +228,11 @@ def traducir_usql_a_sql(consulta_usql):
     """
     lexer.input(consulta_usql)
     try:
+        while True:
+            tok = lexer.token()
+            if not tok:
+                break
+            print(tok)  # Añadido para depuración: imprime los tokens generados
         resultado = parser.parse(consulta_usql)
         return resultado
     except Exception as e:
@@ -227,6 +240,7 @@ def traducir_usql_a_sql(consulta_usql):
         return None
 
 if __name__ == '__main__':
-    consulta_usql = "CAMBIA LA TABLA empleados AGREGA LA COLUMNA direccion VARCHAR(255) NO NULO;"
+    consulta_usql = "CAMBIA_LA_TABLA empleados AGREGA_LA_COLUMNA direccion VARCHAR(255) NO_NULO;"
     resultado = traducir_usql_a_sql(consulta_usql)
     print(resultado)  # Debería devolver: SELECT * FROM usuarios WHERE edad > 18;
+ 
