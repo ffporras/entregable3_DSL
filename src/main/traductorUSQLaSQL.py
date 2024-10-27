@@ -118,12 +118,17 @@ def p_statement(t):
 def p_select_statement(t):
     '''select_statement : TRAEME columns DE_LA_TABLA NOMBRE join_clause condition_opt PUNTO_COMA
                         | TRAEME columns DE_LA_TABLA NOMBRE join_clause condition_opt group_clause PUNTO_COMA'''
-    # Construye la consulta SQL con los elementos que no sean None
+    
     sql_query = f"SELECT {t[2]} FROM {t[4]}"
-    if t[5]: sql_query += f" {t[5]}"
-    if t[6]: sql_query += f" {t[6]}"
-    if len(t) > 8 and t[7]: sql_query += f" {t[7]}"
-    t[0] = sql_query
+    
+    if t[5]: 
+        sql_query += f" {t[5]}"
+    if t[6]: 
+        sql_query += f" {t[6]}"
+    if len(t) > 8 and t[7]: 
+        sql_query += f" {t[7]}"
+        
+    t[0] = sql_query + ";"  
 
 # Nueva regla para manejar la cláusula JOIN
 def p_join_clause(t):
@@ -274,12 +279,18 @@ parser = yacc.yacc()
 #Funciones personalizadas
 def es_consulta_sql_valida(sql):
     """
-    Esta función toma una consulta en SQL y verifica si está con el formato válido.
+    Verifica si la consulta SQL es válida.
     """
     try:
-        sqlparse.parse(sql)
-        return True
-    except:
+        parsed = sqlparse.parse(sql)
+        # Asegúrate de que hay al menos una sentencia completa
+        if not parsed or len(parsed) == 0:
+            return False
+        statement = parsed[0]
+        # Asegúrate de que es una consulta tipo SELECT o similar
+        return statement.get_type() in ["SELECT", "INSERT", "UPDATE", "DELETE", "ALTER"]
+    except Exception as e:
+        print(f"Error de validación SQL: {e}")
         return False
     
 def traducir_usql_a_sql(consulta_usql):
