@@ -2,6 +2,8 @@ import ply.lex as lex
 import ply.yacc as yacc
 import sqlparse
 
+
+
 palabras_clave = (
     'TRAEME', 'TODO', 'DE_LA_TABLA', 'DONDE', 'AGRUPANDO_POR', 'MEZCLANDO', 'EN', 'LOS_DISTINTOS', 'CONTANDO', 'METE_EN',
     'LOS_VALORES', 'ACTUALIZA', 'SETEA', 'BORRA_DE_LA_TABLA', 'ORDENA_POR', 'COMO_MUCHO', 'WHERE_DEL_GROUP_BY', 'EXISTE', 'EN_ESTO',
