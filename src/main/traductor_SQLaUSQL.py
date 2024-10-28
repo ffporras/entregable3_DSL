@@ -1,7 +1,7 @@
 import re
 import sqlparse
 
-# Diccionario de traducción SQL a USQL
+#Diccionario de traducción SQL a USQL
 sql_a_usql = {
     "SELECT": "TRAEME",
     "*": "TODO",
@@ -38,49 +38,39 @@ sql_a_usql = {
     "CAST": "TRANSFORMA A",
 }
 
+
 def traducir_sql_a_usql(consulta_sql):
     # Procesar frases compuestas primero para evitar conflictos
     for sql_frase, usql_frase in sql_a_usql.items():
         consulta_sql = re.sub(rf'\b{re.escape(sql_frase)}\b', usql_frase, consulta_sql, flags=re.IGNORECASE)
 
     # Parsear la consulta SQL y procesar tokens
-    parsed = sqlparse.parse(consulta_sql)[0]
-    translated_tokens = []
+    parseada = sqlparse.parse(consulta_sql)[0]
+    tokens_traducidos = []
 
-    for token in parsed.tokens:
+    for token in parseada.tokens:
         token_str = token.value.upper().strip()
         
         # Intentar traducir usando el diccionario o mantener el token original si no hay traducción
-        translated_token = sql_a_usql.get(token_str, token_str)
+        token_traducido = sql_a_usql.get(token_str, token_str)
         
         # Manejar funciones con paréntesis como COUNT()
         if re.match(r"^[A-Z_]+\(.+\)$", token_str):
             palabra_clave, resto = token_str.split('(', 1)
-            translated_token = f"{sql_a_usql.get(palabra_clave, palabra_clave)}({resto}"
+            token_traducido = f"{sql_a_usql.get(palabra_clave, palabra_clave)}({resto}"
         
-        translated_tokens.append(translated_token)
+        tokens_traducidos.append(token_traducido)
 
     # Unir los tokens y ajustar el formato final
-    final_query = " ".join(translated_tokens)
-    final_query = re.sub(r'\(\s*', '(', final_query)
-    final_query = re.sub(r'\s*\)', ')', final_query)
-    final_query = re.sub(r'\s*,\s*', ', ', final_query)
+    consulta_final = " ".join(tokens_traducidos)
+    consulta_final = re.sub(r'\(\s*', '(', consulta_final)
+    consulta_final = re.sub(r'\s*\)', ')', consulta_final)
+    consulta_final = re.sub(r'\s*,\s*', ', ', consulta_final)
 
-    return final_query
+    return consulta_final
 
-# Ejemplos de uso
-consultas_sql = [
-    "SELECT * FROM usuarios WHERE edad > 18;",
-    "SELECT DISTINCT nombre FROM clientes WHERE ciudad = 'Madrid';",
-    "INSERT INTO usuarios (nombre, edad) VALUES ('Juan', 25);",
-    "UPDATE empleados SET salario = 3000 WHERE puesto = 'ingeniero';",
-    "SELECT * FROM pedidos JOIN clientes ON pedidos.cliente_id = clientes.id WHERE clientes.ciudad = 'Barcelona';",
-    "SELECT COUNT() FROM ventas GROUP BY producto HAVING COUNT() > 5;",
-    "DELETE FROM clientes WHERE edad BETWEEN 18 AND 25;",
-    "ALTER TABLE empleados ADD COLUMN direccion VARCHAR(255) NOT NULL;",
-    "ALTER TABLE empleados DROP COLUMN direccion;"
-]
 
-for consulta in consultas_sql:
-    consulta_usql = traducir_sql_a_usql(consulta)
-    print(consulta_usql)
+if __name__ == '__main__':
+    consulta_usql = "SELECT * FROM usuarios WHERE edad > 18;"
+    resultado = traducir_sql_a_usql(consulta_usql)
+    print(resultado)  
