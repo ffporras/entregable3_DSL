@@ -277,7 +277,6 @@ def p_error(t):
 
 parser = yacc.yacc()
 
-
 #Funciones personalizadas
 def es_consulta_sql_valida(sql):
     """

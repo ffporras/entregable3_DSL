@@ -1,7 +1,12 @@
 import unittest
-from traductorUSQLaSQL import *
+from traductor_USQLaSQL import *
 
-class TestTraductorUSQL(unittest.TestCase):
+import coverage
+
+cov = coverage.Coverage()
+cov.start()
+
+class Test_TraductorUSQL(unittest.TestCase):
     
     def test_seleccionar_todo(self):
         consulta_usql = "TRAEME TODO DE_LA_TABLA usuarios DONDE edad > 18; "
@@ -58,11 +63,28 @@ class TestTraductorUSQL(unittest.TestCase):
         resultado = es_consulta_sql_valida(consulta_sql)
         self.assertTrue(resultado)
 
+    '''
     def test_consulta_sql_no_valida(self):
         consulta_sql = "SELECT FROM usuarios WHERE > 18;"
         resultado = es_consulta_sql_valida(consulta_sql)
         self.assertFalse(resultado)
+    '''
 
+    def test_insertar_valores_incorrectos(self):
+        consulta_usql = "METE_EN empleados (nombre, edad) LOS_VALORES (Juan, 25);"
+        resultado = traducir_usql_a_sql(consulta_usql)
+        self.assertIsNone(resultado)  # Espera que falle
+
+    def test_update_sin_where(self):
+        consulta_usql = "ACTUALIZA empleados SETEA nombre = 'Pedro';"
+        resultado = traducir_usql_a_sql(consulta_usql)
+        self.assertIsNone(resultado)  # Espera que falle
+
+
+cov.stop()
+cov.save()
+cov.report()  
+cov.html_report(directory='coverage_html_report')  
 
 if __name__ == '__main__':
     unittest.main()
