@@ -291,7 +291,7 @@ def es_consulta_sql_valida(sql):
         # Asegúrate de que es una consulta tipo SELECT o similar
         return statement.get_type() in ["SELECT", "INSERT", "UPDATE", "DELETE", "ALTER"]
     except Exception as e:
-        print(f"Error de validación SQL: {e}")
+        #print(f"Error de validación SQL: {e}")
         return False
     
 def traducir_usql_a_sql(consulta_usql):
@@ -310,7 +310,7 @@ def traducir_usql_a_sql(consulta_usql):
         else:
             raise ValueError("Consulta SQL no válida")
     except Exception as e:
-        print(f'Error al procesar la consulta USQL: {str(e)}')
+        #print(f'Error al procesar la consulta USQL: {str(e)}')
         return None
 
 if __name__ == '__main__':
